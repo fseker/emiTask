@@ -10,6 +10,7 @@ public class InstallationPAge
     public void downloadWebInstaller(IWebDriver Driver, string linkText)
     {
         Driver.FindElement(By.LinkText(linkText)).Click();
+        Thread.Sleep(4000);
     }
 
     public static bool CheckFileDownloaded(string filename)
