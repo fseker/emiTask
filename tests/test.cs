@@ -19,8 +19,14 @@ public class Tests : DriverHelper
     public void Setup()
     {
         var options = new ChromeOptions();
-        options.AddArguments("--safebrowsing-disable-download-protection","--headless" );
+        options.AddArguments("--safebrowsing-disable-download-protection", "--disable-gpu", "--headless");
         options.AddUserProfilePreference("safebrowsing", "enabled");
+        
+        //enable file download in headless mode
+        var downloadPath = System.Environment.GetEnvironmentVariable("USERPROFILE") + "\\Downloads";
+        options.AddUserProfilePreference("download.default_directory", downloadPath);
+        options.AddUserProfilePreference("profile.default_content_setting_values.automatic_downloads", 1);
+        
         Driver = new ChromeDriver(options);
         Driver.Manage().Window.Maximize();
         Driver.Navigate().GoToUrl(url);
